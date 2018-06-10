@@ -81,30 +81,72 @@ const App = () => {
     }, 1000)**/
 
 //ReactDOM.render(<App counter={counter}/>, document.getElementById('root'));
+
+
+const Display = ({ counter }) => <div>{counter}</div>
+
+/**const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>
+    {text}
+  </button>
+)**/
+//Withouth destruction
+const Button = (props) => {
+  console.log(props)
+  const { handleClick, text } = props
+  return (
+    <button onClick={handleClick}>
+      {text}
+    </button>
+  )
+}
+
+
+
+
     class App extends React.Component {
       constructor(props) {
         super(props)
         this.state = {
           counter: 1
         }
-        this.kasvataYhdella = this.kasvataYhdella.bind(this)
-    this.nollaa = this.nollaa.bind(this)
+        //this.kasvataYhdella = this.kasvataYhdella.bind(this)
+        //this.nollaa = this.nollaa.bind(this)
 
         setInterval(() => {
           this.setState({ counter: this.state.counter + 1 })
         }, 1000)
 
       }
+      /** 
       kasvataYhdella() {
         this.setState({ counter: this.state.counter + 1 })
       }
     
       nollaa() {
         this.setState({ counter: 0 })
+      }*/
+      //ES8 tapa
+
+      kasvataYhdella = () => {
+        this.setState({ counter: this.state.counter + 1 })
+      }
+    
+      nollaa = () => {
+        this.setState({ counter: 0 })
+      }
+
+      asetaArvoon = (arvo) => {
+        return () => {
+          this.setState({ counter: arvo })
+        }
       }
     
       render() {
         console.log('renderöidään', this.state.counter)
+        //Inf loop
+        //this.setState({counter: 55})
+
 
         function handleClick() {
           console.log('Button was pressed.');
@@ -113,22 +155,90 @@ const App = () => {
         }
 
         return (
-          <div>{this.state.counter}
-            <button onClick={this.kasvataYhdella}>
-              plus
-            </button>
-            <button onClick={this.nollaa}>
-            zero
-            </button>
+          <div>
+        <Display counter={this.state.counter}/>
+        <div>
+        <Button
+          handleClick={this.asetaArvoon(this.state.counter + 1)}
+          text="Plus"
+        />
+        <Button
+          handleClick={this.asetaArvoon(this.state.counter - 1)}
+          text="Minus"
+        />
+        <Button
+          handleClick={this.asetaArvoon(0)}
+          text="Zero"
+        />
+        </div>
+        </div>
+        )
+      }
+    }
+
+    //Toinen esimerkki
+
+
+    class AppTwo extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          vasen: 0,
+          oikea: 0,
+          kaikki: []
+        }
+      }
+    
+      klikVasen = () => {
+        this.setState({
+          vasen: this.state.vasen + 1,
+          kaikki: this.state.kaikki.concat('v')
+        })
+      }
+    
+      klikOikea = () => {
+        this.setState({
+          oikea: this.state.oikea + 1,
+          kaikki: this.state.kaikki.concat('o')
+        })
+      }
+    
+      render() {
+
+        const historia = () => {
+          if (this.state.kaikki.length === 0) {
+            return (
+              <div>
+                <em>sovellusta käytetään nappeja painelemalla</em>
+              </div>
+            )
+          }
+          return (
+            <div>
+              näppäilyhistoria: {this.state.kaikki.join(' ')}
+            </div>
+          )
+        }
+        return (
+          <div>
+            <div>
+              {this.state.vasen}
+              <button onClick={this.klikVasen}>vasen</button>
+              <button onClick={this.klikOikea}>oikea</button>
+              {this.state.oikea}
+              <div>{historia()}</div>
+            </div>
           </div>
         )
       }
     }
+
     
     ReactDOM.render(
       <App />,
       document.getElementById('root')
     )
+
 
 
 
