@@ -42,7 +42,7 @@ class App extends React.Component {
     }
   }
 
-  lisaaHyva = () => {
+  /**lisaaHyva = () => {
     console.log('Here', this.state.hyva);
     this.setState({hyva: this.state.hyva + 1}, function() {this.laskeTilastot()})
   }
@@ -53,6 +53,17 @@ class App extends React.Component {
 
   lisaaHuono = () => {
     this.setState({huono: this.state.huono + 1}, function() {this.laskeTilastot()})
+  }**/
+
+  lisaaPalaute = (palaute) => {
+    switch (palaute) 
+    {
+      case 'a': return () => {this.setState({hyva: this.state.hyva + 1}, function() {this.laskeTilastot()})};
+      case 'b': return () => {this.setState({neutraali: this.state.neutraali + 1}, function() {this.laskeTilastot()})};
+      case 'c': return () => {this.setState({huono: this.state.huono + 1}, function() {this.laskeTilastot()})};
+
+      default: return "";
+    }    
   }
 
   laskeKeskiarvo = () => {
@@ -96,9 +107,9 @@ class App extends React.Component {
         <h1>Anna palautetta</h1>
       </div>
       <div>
-        <Button handleClick={this.lisaaHyva} text="hyvä"/>
-        <Button handleClick={this.lisaaNeutraali} text="neutraali"/>
-        <Button handleClick={this.lisaaHuono} text="huono"/>
+        <Button handleClick={this.lisaaPalaute('a')} text="hyvä"/>
+        <Button handleClick={this.lisaaPalaute('b')} text="neutraali"/>
+        <Button handleClick={this.lisaaPalaute('c')} text="huono"/>
       </div>
       <div>
         <h1>Statistiikka</h1>
