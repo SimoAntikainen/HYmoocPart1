@@ -14,17 +14,24 @@ const Statistics = ({hyva, neutraali, huono, keskiarvo, positiivisia}) => {
 
   return (
     <div>
-        <Statistic teksti="Hyvä" arvo={hyva}/>
-        <Statistic teksti="Neutraali" arvo={neutraali}/>
-        <Statistic teksti="Huono" arvo={huono}/>
-        <Statistic teksti="Keskiarvo" arvo={keskiarvo}/>
-        <Statistic teksti="Positiivisia" arvo={positiivisia} lopputeksti="%"/>
-      </div>
+      <table>
+        <tbody>
+          <Statistic teksti="Hyvä" arvo={hyva}/>
+          <Statistic teksti="Neutraali" arvo={neutraali}/>
+          <Statistic teksti="Huono" arvo={huono}/>
+          <Statistic teksti="Keskiarvo" arvo={keskiarvo}/>
+          <Statistic teksti="Positiivisia" arvo={positiivisia} lopputeksti="%"/>
+        </tbody>
+      </table>
+    </div>
   )
 }
 const Statistic = ({teksti, arvo, lopputeksti}) => {
   return (
-    <p>{teksti} {arvo} {lopputeksti}</p>
+    <tr>
+      <td>{teksti}</td>
+      <td>{arvo} {lopputeksti}</td>
+    </tr>
   ) 
 }
 
@@ -77,7 +84,7 @@ class App extends React.Component {
     / (this.state.hyva + this.state.neutraali +  this.state.huono)) *100).toPrecision(3)
     this.setState({positiivisia: laskettuArvo}) 
   }
-  
+
   laskeTilastot = () => {
     this.laskeKeskiarvo()
     this.laskePositiiviset()
