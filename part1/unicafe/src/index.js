@@ -58,28 +58,26 @@ class App extends React.Component {
   lisaaPalaute = (palaute) => {
     switch (palaute) 
     {
-      case 'a': return () => {this.setState({hyva: this.state.hyva + 1}, function() {this.laskeTilastot()})};
-      case 'b': return () => {this.setState({neutraali: this.state.neutraali + 1}, function() {this.laskeTilastot()})};
-      case 'c': return () => {this.setState({huono: this.state.huono + 1}, function() {this.laskeTilastot()})};
+      case 'a': return () => {this.setState({hyva: this.state.hyva + 1}, function() {this.laskeTilastot()})}
+      case 'b': return () => {this.setState({neutraali: this.state.neutraali + 1}, function() {this.laskeTilastot()})}
+      case 'c': return () => {this.setState({huono: this.state.huono + 1}, function() {this.laskeTilastot()})}
 
-      default: return "";
+      default: return ""
     }    
   }
 
   laskeKeskiarvo = () => {
-    console.log('Here');
     const laskettuArvo = ((this.state.hyva * 1 + this.state.huono * -1) 
     / (this.state.hyva + this.state.neutraali +  this.state.huono)).toPrecision(1)
-    console.log('Here', laskettuArvo);
     this.setState({keskiarvo: laskettuArvo})  
   }
 
   laskePositiiviset = () => {
     const laskettuArvo = (((this.state.hyva * 1)
     / (this.state.hyva + this.state.neutraali +  this.state.huono)) *100).toPrecision(3)
-    console.log('Here', laskettuArvo);
     this.setState({positiivisia: laskettuArvo}) 
   }
+  
   laskeTilastot = () => {
     this.laskeKeskiarvo()
     this.laskePositiiviset()
