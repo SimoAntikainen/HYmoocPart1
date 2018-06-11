@@ -15,28 +15,35 @@ class App extends React.Component {
   }
 
   lisaaHyva = () => {
-    this.setState({hyva: this.state.hyva + 1})
-    this.laskeKeskiarvo()
-  }
-  lisaaNeutraali = () => {
-    this.setState({neutraali: this.state.neutraali + 1})
-    this.laskeKeskiarvo()
-  }
-  lisaaHuono = () => {
-    this.setState({huono: this.state.huono + 1})
-    this.laskeKeskiarvo()
+    console.log('Here', this.state.hyva);
+    this.setState({hyva: this.state.hyva + 1}, function() {this.laskeTilastot()})
   }
 
+  lisaaNeutraali = () => {
+    this.setState({neutraali: this.state.neutraali + 1}, function() {this.laskeTilastot()})
+  }
+
+  lisaaHuono = () => {
+    this.setState({huono: this.state.huono + 1}, function() {this.laskeTilastot()})
+  }
 
   laskeKeskiarvo = () => {
     console.log('Here');
-    const laskettuArvo = (this.state.hyva * 1 + this.state.huono * -1) 
-    / (this.state.hyva + this.state.neutraali +  this.state.huono)
+    const laskettuArvo = ((this.state.hyva * 1 + this.state.huono * -1) 
+    / (this.state.hyva + this.state.neutraali +  this.state.huono)).toPrecision(1)
+    console.log('Here', laskettuArvo);
     this.setState({keskiarvo: laskettuArvo})  
   }
 
   laskePositiiviset = () => {
-    
+    const laskettuArvo = ((this.state.hyva * 1)
+    / (this.state.hyva + this.state.neutraali +  this.state.huono)).toPrecision(2)
+    console.log('Here', laskettuArvo);
+    this.setState({positiivisia: laskettuArvo}) 
+  }
+  laskeTilastot = () => {
+    this.laskeKeskiarvo()
+    this.laskePositiiviset()
   }
   
 
@@ -59,7 +66,7 @@ class App extends React.Component {
         <p>Neutraali {this.state.neutraali}</p>
         <p>Huono {this.state.huono}</p>
         <p>keskiarvo {this.state.keskiarvo}</p>
-        <p>positiivisia {this.state.positiivisia}</p>
+        <p>positiivisia {this.state.positiivisia} %</p>
       </div>
     </div>
     )
