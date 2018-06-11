@@ -76,6 +76,20 @@ class App extends React.Component {
   
 
   render() {
+    const eiPalautetta = () => {
+      if((this.state.hyva + this.state.neutraali + this.state.huono) === 0) {
+        return (
+          <p>Ei yhtään palautetta</p>
+        ) 
+      } else {
+        return (
+          <Statistics hyva={this.state.hyva} neutraali={this.state.neutraali} 
+          huono={this.state.huono} keskiarvo={this.state.keskiarvo} 
+          positiivisia={this.state.positiivisia}/>
+        )
+      }
+    }
+
     return (
     <div>
       <div>
@@ -90,9 +104,7 @@ class App extends React.Component {
         <h1>Statistiikka</h1>
       </div>
       <div>
-        <Statistics hyva={this.state.hyva} neutraali={this.state.neutraali} 
-        huono={this.state.huono} keskiarvo={this.state.keskiarvo} 
-        positiivisia={this.state.positiivisia}/>
+        {eiPalautetta()}
       </div>
     </div>
     )
