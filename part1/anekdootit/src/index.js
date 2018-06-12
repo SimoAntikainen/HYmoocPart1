@@ -9,14 +9,10 @@ class App extends React.Component {
     }
   }
 
-  nextAnecdote = () => {
-    
+  nextAnecdote = () => {    
     const randomNumber = this.randomInt(this.props.anecdotes.length)
-    console.log("ranodm", randomNumber)
-    return (
-      () => this.setState({selected: randomNumber})
-    )
-
+    console.log("ranodm", randomNumber) 
+    this.setState({selected: randomNumber})
   }
 
   randomInt = (max) => {
@@ -31,7 +27,7 @@ class App extends React.Component {
           {this.props.anecdotes[this.state.selected]}
         </div>
         <div>
-          <button onClick={this.nextAnecdote()}>Next anecdote</button>
+          <button onClick={this.nextAnecdote}>Next anecdote</button>
         </div>
       </div>
     )
