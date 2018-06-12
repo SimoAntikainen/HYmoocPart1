@@ -5,29 +5,54 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: 0
+      selected: 0,
+      votesAnecdotes: {...[...new Array(this.props.anecdotes.length)].map(x => 0)}, 
+      mostVoted: 0
     }
   }
 
-  nextAnecdote = () => {    
+  nextAnecdote = () => {  
     const randomNumber = this.randomInt(this.props.anecdotes.length)
-    console.log("ranodm", randomNumber) 
     this.setState({selected: randomNumber})
   }
 
   randomInt = (max) => {
-    console.log("max", max)
     return Math.floor(Math.random() * Math.floor(max))
+  }
+
+  voteAnecdote = () => {
+    const copiedAnecdotes = {...this.state.votesAnecdotes}
+    copiedAnecdotes[this.state.selected] += 1
+    this.setState({votesAnecdotes: copiedAnecdotes}, function() {this.mostVotes()})
+  }
+
+  mostVotes = () => {
+    const cpyAnec = {...this.state.votesAnecdotes}
+    const largestKey = Object.keys(cpyAnec).reduce((x, y) => cpyAnec[x] > cpyAnec[y] ? x : y)
+    this.setState({mostVoted: largestKey})
   }
 
   render() {
     return (
       <div>
         <div>
-          {this.props.anecdotes[this.state.selected]}
+          <p>{this.props.anecdotes[this.state.selected]}</p>
+        </div>
+        <div>
+          <p>Has {this.state.votesAnecdotes[this.state.selected]} votes</p>
         </div>
         <div>
           <button onClick={this.nextAnecdote}>Next anecdote</button>
+          <button onClick={this.voteAnecdote}>Vote</button>
+        </div>
+        <div>
+          <h1>anecdote with most votes</h1>
+        </div>
+        <div>
+          <p>{this.props.anecdotes[this.state.mostVoted]}</p>
+        </div>
+        <div>
+          <p>Has {this.state.votesAnecdotes[this.state.mostVoted]} votes</p>
         </div>
       </div>
     )
