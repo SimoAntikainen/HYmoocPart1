@@ -9,10 +9,30 @@ class App extends React.Component {
     }
   }
 
+  nextAnecdote = () => {
+    
+    const randomNumber = this.randomInt(this.props.anecdotes.length)
+    console.log("ranodm", randomNumber)
+    return (
+      () => this.setState({selected: randomNumber})
+    )
+
+  }
+
+  randomInt = (max) => {
+    console.log("max", max)
+    return Math.floor(Math.random() * Math.floor(max))
+  }
+
   render() {
     return (
       <div>
-        {this.props.anecdotes[this.state.selected]}
+        <div>
+          {this.props.anecdotes[this.state.selected]}
+        </div>
+        <div>
+          <button onClick={this.nextAnecdote()}>Next anecdote</button>
+        </div>
       </div>
     )
   }
